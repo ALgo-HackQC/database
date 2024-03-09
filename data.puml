@@ -1,0 +1,55 @@
+@startuml
+!pragma teoz true
+
+entity "User" as user {
+  + id [PK]
+  --
+  last_name
+  first_name
+  username
+  email
+  password_hash
+}
+
+entity "Location" as location {
+  + id [PK]
+  --
+  latitude
+  longitude
+}
+
+entity "Installation" as installation {
+ + id [PK]
+ --
+ name
+ type
+ description
+ location
+}
+
+entity "Contribution" as contribution {
+  + id [PK]
+  --
+  user_id [FK]
+  installation_id [FK]
+  date
+  note
+}
+
+entity "Report" as report {
+  + id [PK]
+  --
+  user_id [FK]
+  installation_id [FK]
+  date
+  severity
+  problem
+}
+
+installation --o location : Contains
+contribution --o user : Submitted by
+contribution --o installation : Submitted for
+report --o user : Reported by
+report --o installation : Reported for
+
+@enduml
